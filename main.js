@@ -57,6 +57,10 @@ async function getColors() {
         th.forEach(el => {
             el.style.display = 'table-cell'
         })
+
+        headerCheckboxes.forEach(el => {
+            el.checked = true;
+        })
     })
 }
 
