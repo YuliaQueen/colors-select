@@ -9,9 +9,6 @@
     align-items: center;
 }
 
-.table {
-    border-collapse: collapse;
-}
 
 .header {
     display: flex;
@@ -78,4 +75,8 @@ label {
 
 .item__name {
     margin-left: 6px;
+}
+
+.table thead th {
+    border-bottom: none;
 }
