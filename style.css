@@ -19,6 +19,26 @@
     align-items: center;
 }
 
+.header__btn {
+    position: relative;
+    border: none;
+    background-color: transparent;
+    color: dodgerblue;
+    outline: none !important;
+
+}
+
+
+.header__btn svg {
+    position: absolute;
+    top: 50%;
+    left: -20px;
+    width: 20px;
+    height: 20px;
+    transform: translateY(-50%);
+    fill: dodgerblue;
+}
+
 .header__title {
     align-self: flex-start;
     font-size: 1.5rem;
