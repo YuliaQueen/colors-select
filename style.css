@@ -50,15 +50,11 @@
 }
 
 .color__prev {
-    display: inline-block;
     width: 15px;
     height: 15px;
     margin-right: 5px;
 }
 
-.color__hash {
-    display: inline-block;
-}
 
 .table__head {
     font-size: 13px;

@@ -30,24 +30,55 @@ async function getColors() {
     let td = document.querySelectorAll('td');
     let th = document.querySelectorAll('th');
 
-    headerCheckboxes.forEach(head => {
-        head.addEventListener('click', (e) => {
+    let getUnchecked = JSON.parse(localStorage.getItem('checkboxes'));
 
+    if (getUnchecked) {
+        getUnchecked.forEach(el => {
+            document.getElementById(el).checked = false;
+            let dataName = document.querySelectorAll(`[data-name = "${el}"]`);
 
-            td.forEach(td => {
-                if (e.target.id === td.dataset.name && !e.target.checked) {
-                    td.style.display = 'none'
-                }
+            dataName.forEach(el => {
+                el.style.display = 'none'
             })
-
-            th.forEach(th => {
-                if (e.target.id === th.dataset.name && !e.target.checked) {
-                    th.style.display = 'none'
-                }
-            })
-
         })
-    })
+    }
+
+
+    let unchecked = [];
+
+    headerCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('click', (e) => {
+
+                if (!checkbox.checked) {
+                    unchecked.push(e.currentTarget.id);
+                }
+
+                localStorage.setItem('checkboxes', JSON.stringify(unchecked));
+
+
+                if (getUnchecked) {
+                    getUnchecked.push(e.currentTarget.id);
+
+                    localStorage.setItem('checkboxes', JSON.stringify(getUnchecked));
+                }
+
+
+                td.forEach(td => {
+                    if (e.target.id === td.dataset.name && !e.target.checked) {
+                        td.style.display = 'none'
+                    }
+                })
+
+                th.forEach(th => {
+                    if (e.target.id === th.dataset.name && !e.target.checked) {
+                        th.style.display = 'none'
+                    }
+                })
+
+            })
+        }
+    )
+
 
     buttonReset.addEventListener('click', () => {
         td.forEach(el => {
@@ -61,6 +92,8 @@ async function getColors() {
         headerCheckboxes.forEach(el => {
             el.checked = true;
         })
+
+        localStorage.removeItem('checkboxes')
     })
 }
 
