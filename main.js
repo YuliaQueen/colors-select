@@ -1,9 +1,11 @@
 async function getColors() {
+    //получаем данные из api
     let response = await fetch("https://reqres.in/api/unknown?per_page=12");
     let content = await response.json();
     let colors = content.data;
     let tbody = document.querySelector('.table__body');
 
+    // в цикле создаем строки таблицы и присваиваем им полученные данные
     for (const color of colors) {
         color.name = color.name[0].toUpperCase() + color.name.substring(1);
 
@@ -25,13 +27,16 @@ async function getColors() {
             </tr>`;
     }
 
+    //создаем нужные нам переменные
     let headerCheckboxes = document.querySelectorAll('th input');
     let buttonReset = document.querySelector('.header__btn');
     let td = document.querySelectorAll('td');
     let th = document.querySelectorAll('th');
 
+    //достаем запись из LocalStorage по ключу и создаем массив с id выключенных чекбоксов
     let getUnchecked = JSON.parse(localStorage.getItem('checkboxes'));
 
+    //если такой массив существует скрываем столбцы с таким же data-name
     if (getUnchecked) {
         getUnchecked.forEach(el => {
             document.getElementById(el).checked = false;
@@ -43,32 +48,32 @@ async function getColors() {
         })
     }
 
-
+    //создаем пустой массив с unchecked checkboxes
     let unchecked = [];
 
     headerCheckboxes.forEach(checkbox => {
             checkbox.addEventListener('click', (e) => {
-
+                //если отключили чекбокс, то записываем его в массив
                 if (!checkbox.checked) {
                     unchecked.push(e.currentTarget.id);
                 }
-
+                //закидываем массив с анчекнутыми чекбоксами в Local Storage
                 localStorage.setItem('checkboxes', JSON.stringify(unchecked));
 
-
+                //если в Local Storage уже существует массив с чекбоксами
                 if (getUnchecked) {
                     getUnchecked.push(e.currentTarget.id);
 
                     localStorage.setItem('checkboxes', JSON.stringify(getUnchecked));
                 }
 
-
+                //скрываем столбцы, если чекбокс с таким жу id анчекнут
                 td.forEach(td => {
                     if (e.target.id === td.dataset.name && !e.target.checked) {
                         td.style.display = 'none'
                     }
                 })
-
+                //то же самое делаем с названием столбца в шапке
                 th.forEach(th => {
                     if (e.target.id === th.dataset.name && !e.target.checked) {
                         th.style.display = 'none'
@@ -79,7 +84,7 @@ async function getColors() {
         }
     )
 
-
+    //при нажатии кнопки Reset делаем все чекбоксы активными, показываем все столбцы и очищаем Local Storage
     buttonReset.addEventListener('click', () => {
         td.forEach(el => {
             el.style.display = 'table-cell'
