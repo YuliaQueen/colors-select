@@ -36,6 +36,14 @@
     fill: dodgerblue;
 }
 
+.header__btn:disabled {
+    color: darkgray;
+}
+
+.header__btn:disabled svg{
+    fill: darkgray;
+}
+
 .header__title {
     align-self: flex-start;
     font-size: 1.5rem;

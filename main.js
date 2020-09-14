@@ -36,8 +36,11 @@ async function getColors() {
     //достаем запись из LocalStorage по ключу и создаем массив с id выключенных чекбоксов
     let getUnchecked = JSON.parse(localStorage.getItem('checkboxes'));
 
-    //если такой массив существует скрываем столбцы с таким же data-name
+    //если такой массив существует скрываем столбцы с таким же data-name при перезагрузке страницы
     if (getUnchecked) {
+        //если массив существует, то кнопка Reset должна быть активной
+        buttonReset.disabled = false;
+
         getUnchecked.forEach(el => {
             document.getElementById(el).checked = false;
             let dataName = document.querySelectorAll(`[data-name = "${el}"]`);
@@ -57,6 +60,11 @@ async function getColors() {
                 if (!checkbox.checked) {
                     unchecked.push(e.currentTarget.id);
                 }
+
+                if (!checkbox.checked || unchecked.length === 0 || getUnchecked > 0) {
+                    buttonReset.disabled = false;
+                }
+
                 //закидываем массив с анчекнутыми чекбоксами в Local Storage
                 localStorage.setItem('checkboxes', JSON.stringify(unchecked));
 
@@ -83,7 +91,6 @@ async function getColors() {
             })
         }
     )
-
     //при нажатии кнопки Reset делаем все чекбоксы активными, показываем все столбцы и очищаем Local Storage
     buttonReset.addEventListener('click', () => {
         td.forEach(el => {
@@ -97,7 +104,11 @@ async function getColors() {
         headerCheckboxes.forEach(el => {
             el.checked = true;
         })
-
+        //делаем кнопку неактивной
+        buttonReset.disabled = true;
+        //обнуляем массив id из Local Storage
+        getUnchecked = [];
+        //удаляем данные из Local Storage
         localStorage.removeItem('checkboxes')
     })
 }
