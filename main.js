@@ -5,7 +5,7 @@ async function getColors() {
     let colors = content.data;
     let tbody = document.querySelector('.table__body');
 
-    // в цикле создаем строки таблицы и присваиваем им полученные данные
+    // в цикле создаем строки таблицы и присваиваем им полученные данные, для названия цвета делаем первую букву заглавной
     for (const color of colors) {
         color.name = color.name[0].toUpperCase() + color.name.substring(1);
 
@@ -75,7 +75,7 @@ async function getColors() {
                     localStorage.setItem('checkboxes', JSON.stringify(getUnchecked));
                 }
 
-                //скрываем столбцы, если чекбокс с таким жу id анчекнут
+                //скрываем столбцы, если чекбокс с таким же id неактивен
                 td.forEach(td => {
                     if (e.target.id === td.dataset.name && !e.target.checked) {
                         td.style.display = 'none'
